@@ -5,37 +5,37 @@ body {
     padding: 0;
     background: linear-gradient(135deg, #1e1e2f, #2c2c40);
     color: #ecf0f1;
-    line-height: 1.6;
+    line-height: 1.8; /* Увеличиваем межстрочный интервал для удлинения текста */
     font-size: 16px;
-    display: flex; /* Делаем body флекс-контейнером */
-    justify-content: center; /* Центрируем по горизонтали */
-    align-items: center; /* Центрируем по вертикали */
-    min-height: 100vh; /* Устанавливаем минимальную высоту viewport */
-    flex-direction: column; /* Располагаем элементы по вертикали */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
 }
 
 /* Шапка сайта */
 header {
     background: linear-gradient(135deg, #2c3e50, #34495e);
     color: #ecf0f1;
-    padding: 20px 15px;
+    padding: 40px 20px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    width: 100%; /* Занимает всю ширину */
-    max-width: 800px; /* Ограничиваем максимальную ширину */
+    width: 100%;
+    max-width: 400px; /* Уменьшаем ширину шапки */
 }
 
 header h1 {
     margin: 0;
-    font-size: 2.5em;
+    font-size: 2em; /* Уменьшаем размер заголовка */
     font-weight: bold;
     letter-spacing: 1px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 header p {
-    margin: 5px 0 0;
-    font-size: 1.2em;
+    margin: 10px 0 0;
+    font-size: 1em;
     font-style: italic;
     opacity: 0.8;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
@@ -43,25 +43,25 @@ header p {
 
 /* Основной контейнер */
 .container {
-    max-width: 800px;
-    width: 100%; /* Занимает всю доступную ширину */
-    margin: 20px auto;
-    padding: 20px;
+    max-width: 400px; /* Сильное ограничение ширины для создания "длинного" текста */
+    width: 100%;
+    margin: 40px auto;
+    padding: 40px 20px;
     background: linear-gradient(135deg, #27273a, #31314b);
     border-radius: 12px;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center; /* Выравниваем текст внутри контейнера по центру */
+    text-align: center;
 }
 
 .container h2 {
     color: #ecf0f1;
-    font-size: 1.8em;
-    margin-bottom: 15px;
+    font-size: 1.5em; /* Уменьшаем заголовки */
+    margin-bottom: 20px;
     border-bottom: 2px solid #ecf0f1;
     padding-bottom: 10px;
     position: relative;
-    text-align: center; /* Выравниваем заголовки по центру */
+    text-align: center;
 }
 
 .container h2::after {
@@ -76,26 +76,26 @@ header p {
 }
 
 .container p {
-    line-height: 1.6;
-    margin-bottom: 15px;
-    text-align: center; /* Выравниваем параграфы по центру */
+    line-height: 2; /* Увеличиваем межстрочный интервал */
+    margin-bottom: 20px;
+    text-align: justify; /* Выравниваем текст по ширине */
 }
 
 /* Списки шагов */
 .steps ol {
-    padding-left: 0; /* Убираем отступы */
+    padding-left: 0;
     counter-reset: step-counter;
-    text-align: center; /* Выравниваем список по центру */
+    text-align: center;
 }
 
 .steps li {
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     position: relative;
     padding-left: 30px;
-    font-size: 1.1em;
+    font-size: 1em; /* Уменьшаем размер текста в списке */
     color: #ecf0f1;
-    display: inline-block; /* Делаем элементы списка строчно-блочными */
-    text-align: left; /* Текст внутри элемента списка по левому краю */
+    display: inline-block;
+    text-align: left;
 }
 
 .steps li::before {
@@ -121,14 +121,14 @@ header p {
 .warning {
     background: linear-gradient(135deg, #ff4d4d, #e74c3c);
     color: #fff;
-    padding: 15px;
+    padding: 20px;
     border-radius: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     border-left: 5px solid #c0392b;
-    font-size: 1.1em;
+    font-size: 1em;
     font-weight: bold;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    text-align: center; /* Выравниваем предупреждение по центру */
+    text-align: center;
 }
 
 .warning strong {
@@ -140,14 +140,14 @@ header p {
     display: inline-block;
     background: linear-gradient(135deg, #3498db, #2980b9);
     color: #fff;
-    padding: 12px 24px;
+    padding: 15px 30px;
     text-decoration: none;
     border-radius: 50px;
-    font-size: 1em;
+    font-size: 1.1em;
     font-weight: bold;
     transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    margin-top: 20px; /* Добавляем отступ сверху */
+    margin-top: 30px;
 }
 
 .btn:hover {
@@ -159,14 +159,14 @@ header p {
 /* Футер */
 footer {
     text-align: center;
-    padding: 15px;
+    padding: 20px;
     background: linear-gradient(135deg, #2c3e50, #34495e);
     color: #ecf0f1;
-    margin-top: 20px;
+    margin-top: 40px;
     font-size: 0.9em;
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
-    width: 100%; /* Занимает всю ширину */
-    max-width: 800px; /* Ограничиваем максимальную ширину */
+    width: 100%;
+    max-width: 400px; /* Уменьшаем ширину футера */
 }
 
 footer a {
@@ -184,19 +184,19 @@ footer a:hover {
 /* Адаптивность */
 @media (max-width: 768px) {
     header h1 {
-        font-size: 2em;
+        font-size: 1.8em;
     }
 
     header p {
-        font-size: 1em;
+        font-size: 0.9em;
     }
 
     .container {
-        padding: 15px;
+        padding: 30px 15px;
     }
 
     .container h2 {
-        font-size: 1.5em;
+        font-size: 1.3em;
     }
 
     .btn {
