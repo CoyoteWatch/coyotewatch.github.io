@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://coyotewatch.github.io/coyotewatch/sitemap.xml
