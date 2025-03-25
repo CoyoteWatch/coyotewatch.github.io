@@ -7,6 +7,7 @@ body {
     color: #ecf0f1;
     line-height: 1.6;
     font-size: 16px;
+    text-align: center; /* Выравнивание текста по центру */
 }
 
 /* Шапка сайта */
@@ -14,7 +15,7 @@ header {
     background: linear-gradient(135deg, #2c3e50, #34495e);
     color: #ecf0f1;
     padding: 20px 15px;
-    text-align: center;
+    text-align: center; /* Уже есть, оставляем */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
@@ -43,6 +44,7 @@ header p {
     border-radius: 12px;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center; /* Добавляем выравнивание по центру */
 }
 
 .container:hover {
@@ -57,13 +59,15 @@ header p {
     border-bottom: 2px solid #ecf0f1;
     padding-bottom: 10px;
     position: relative;
+    text-align: center; /* Добавляем выравнивание по центру */
 }
 
 .container h2::after {
     content: '';
     position: absolute;
     bottom: -2px;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     width: 50px;
     height: 2px;
     background-color: #3498db;
@@ -72,18 +76,20 @@ header p {
 .container p {
     line-height: 1.6;
     margin-bottom: 15px;
-    text-align: justify;
+    text-align: center; /* Изменяем на выравнивание по центру */
 }
 
 /* Списки шагов */
 .steps ol {
-    padding-left: 20px;
+    padding-left: 0; /* Убираем отступы слева */
     counter-reset: step-counter;
+    text-align: center; /* Центрируем список */
 }
 
 .steps li {
     margin-bottom: 10px;
     position: relative;
+    display: inline-block; /* Делаем элементы списка строчно-блочными */
     padding-left: 30px;
     font-size: 1.1em;
     color: #ecf0f1;
@@ -119,6 +125,7 @@ header p {
     font-size: 1.1em;
     font-weight: bold;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    text-align: center; /* Добавляем выравнивание по центру */
 }
 
 .warning strong {
@@ -147,7 +154,7 @@ header p {
 
 /* Футер */
 footer {
-    text-align: center;
+    text-align: center; /* Уже есть, оставляем */
     padding: 15px;
     background: linear-gradient(135deg, #2c3e50, #34495e);
     color: #ecf0f1;
