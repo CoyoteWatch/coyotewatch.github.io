@@ -7,6 +7,11 @@ body {
     color: #ecf0f1;
     line-height: 1.6;
     font-size: 16px;
+    display: flex; /* Делаем body флекс-контейнером */
+    justify-content: center; /* Центрируем по горизонтали */
+    align-items: center; /* Центрируем по вертикали */
+    min-height: 100vh; /* Устанавливаем минимальную высоту viewport */
+    flex-direction: column; /* Располагаем элементы по вертикали */
 }
 
 /* Шапка сайта */
@@ -16,133 +21,21 @@ header {
     padding: 20px 15px;
     text-align: center;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-header h1 {
-    margin: 0;
-    font-size: 2.5em;
-    font-weight: bold;
-    letter-spacing: 1px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-}
-
-header p {
-    margin: 5px 0 0;
-    font-size: 1.2em;
-    font-style: italic;
-    opacity: 0.8;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    width: 100%; /* Занимает всю ширину */
+    max-width: 800px; /* Ограничиваем максимальную ширину */
 }
 
 /* Основной контейнер */
 .container {
     max-width: 800px;
+    width: 100%; /* Занимает всю доступную ширину */
     margin: 20px auto;
     padding: 20px;
     background: linear-gradient(135deg, #27273a, #31314b);
     border-radius: 12px;
     box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-}
-
-.container h2 {
-    color: #ecf0f1;
-    font-size: 1.8em;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #ecf0f1;
-    padding-bottom: 10px;
-    position: relative;
-}
-
-.container h2::after {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 50px;
-    height: 2px;
-    background-color: #3498db;
-}
-
-.container p {
-    line-height: 1.6;
-    margin-bottom: 15px;
-    text-align: justify;
-}
-
-/* Списки шагов */
-.steps ol {
-    padding-left: 20px;
-    counter-reset: step-counter;
-}
-
-.steps li {
-    margin-bottom: 10px;
-    position: relative;
-    padding-left: 30px;
-    font-size: 1.1em;
-    color: #ecf0f1;
-}
-
-.steps li::before {
-    content: counter(step-counter);
-    counter-increment: step-counter;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 25px;
-    height: 25px;
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.8em;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-/* Предупреждение */
-.warning {
-    background: linear-gradient(135deg, #ff4d4d, #e74c3c);
-    color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    border-left: 5px solid #c0392b;
-    font-size: 1.1em;
-    font-weight: bold;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-}
-
-.warning strong {
-    color: #fff;
-}
-
-/* Кнопка */
-.btn {
-    display: inline-block;
-    background: linear-gradient(135deg, #3498db, #2980b9);
-    color: #fff;
-    padding: 12px 24px;
-    text-decoration: none;
-    border-radius: 50px;
-    font-size: 1em;
-    font-weight: bold;
-    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-.btn:hover {
-    background: linear-gradient(135deg, #2980b9, #3498db);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    text-align: center; /* Выравниваем текст внутри контейнера по центру */
 }
 
 /* Футер */
@@ -154,18 +47,8 @@ footer {
     margin-top: 20px;
     font-size: 0.9em;
     box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
-}
-
-footer a {
-    color: #3498db;
-    text-decoration: none;
-    font-weight: bold;
-    transition: color 0.3s ease;
-}
-
-footer a:hover {
-    color: #2980b9;
-    text-decoration: underline;
+    width: 100%; /* Занимает всю ширину */
+    max-width: 800px; /* Ограничиваем максимальную ширину */
 }
 
 /* Адаптивность */
