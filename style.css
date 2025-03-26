@@ -5,7 +5,7 @@
     --accent-gradient: linear-gradient(135deg, #3498db, #2980b9);
     --warning-gradient: linear-gradient(135deg, #ff4d4d, #e74c3c);
     --text-color: #ecf0f1;
-    --shadow: rgba(0, 0, 0, 0.2);
+    --shadow: rgba(0, 0, 1, 0.2);
 }
 
 body {
