@@ -93,24 +93,26 @@ header p {
 .steps ol {
     padding-left: 0;
     counter-reset: step-counter;
-    text-align: center;
+    text-align: left; /* Убираем центрирование текста */
+    list-style: none; /* Убираем стандартные маркеры списка */
+    margin: 0; /* Убираем отступы по умолчанию */
 }
 
 .steps li {
-    margin-bottom: 15px;
+    margin-bottom: 15px; /* Расстояние между элементами */
     position: relative;
-    padding-left: 30px;
+    padding-left: 30px; /* Отступ слева для текста */
     font-size: clamp(0.9em, 2.5vw, 1em);
     color: var(--text-color);
-    display: inline-block;
-    text-align: left;
+    display: block; /* Выстраиваем элементы вертикально */
+    text-align: left; /* Текст выравнивается по левому краю */
 }
 
 .steps li::before {
     content: counter(step-counter);
     counter-increment: step-counter;
     position: absolute;
-    left: -30px;
+    left: 0; /* Позиционируем номер слева */
     top: 0;
     width: 25px;
     height: 25px;
