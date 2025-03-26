@@ -1,11 +1,20 @@
 /* Общие стили */
+:root {
+    --primary-gradient: linear-gradient(135deg, #1e1e2f, #2c2c40);
+    --secondary-gradient: linear-gradient(135deg, #2c3e50, #34495e);
+    --accent-gradient: linear-gradient(135deg, #3498db, #2980b9);
+    --warning-gradient: linear-gradient(135deg, #ff4d4d, #e74c3c);
+    --text-color: #ecf0f1;
+    --shadow: rgba(0, 0, 0, 0.2);
+}
+
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #1e1e2f, #2c2c40);
-    color: #ecf0f1;
-    line-height: 1.8; /* Увеличиваем межстрочный интервал для удлинения текста */
+    background: var(--primary-gradient);
+    color: var(--text-color);
+    line-height: 1.8;
     font-size: 16px;
     display: flex;
     justify-content: center;
@@ -16,18 +25,18 @@ body {
 
 /* Шапка сайта */
 header {
-    background: linear-gradient(135deg, #2c3e50, #34495e);
-    color: #ecf0f1;
+    background: var(--secondary-gradient);
+    color: var(--text-color);
     padding: 40px 20px;
     text-align: center;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px var(--shadow);
     width: 100%;
-    max-width: 400px; /* Уменьшаем ширину шапки */
+    max-width: 400px;
 }
 
 header h1 {
     margin: 0;
-    font-size: 2em; /* Уменьшаем размер заголовка */
+    font-size: clamp(1.5em, 4vw, 2em);
     font-weight: bold;
     letter-spacing: 1px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
@@ -35,7 +44,7 @@ header h1 {
 
 header p {
     margin: 10px 0 0;
-    font-size: 1em;
+    font-size: clamp(0.9em, 3vw, 1em);
     font-style: italic;
     opacity: 0.8;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
@@ -43,25 +52,24 @@ header p {
 
 /* Основной контейнер */
 .container {
-    max-width: 400px; /* Сильное ограничение ширины для создания "длинного" текста */
+    max-width: 400px;
     width: 100%;
     margin: 40px auto;
     padding: 40px 20px;
     background: linear-gradient(135deg, #27273a, #31314b);
     border-radius: 12px;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 10px var(--shadow);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     text-align: center;
 }
 
 .container h2 {
-    color: #ecf0f1;
-    font-size: 1.5em; /* Уменьшаем заголовки */
+    color: var(--text-color);
+    font-size: clamp(1.2em, 3vw, 1.5em);
     margin-bottom: 20px;
-    border-bottom: 2px solid #ecf0f1;
+    border-bottom: 2px solid var(--text-color);
     padding-bottom: 10px;
     position: relative;
-    text-align: center;
 }
 
 .container h2::after {
@@ -76,9 +84,9 @@ header p {
 }
 
 .container p {
-    line-height: 2; /* Увеличиваем межстрочный интервал */
+    line-height: 2;
     margin-bottom: 20px;
-    text-align: justify; /* Выравниваем текст по ширине */
+    text-align: justify;
 }
 
 /* Списки шагов */
@@ -92,8 +100,8 @@ header p {
     margin-bottom: 15px;
     position: relative;
     padding-left: 30px;
-    font-size: 1em; /* Уменьшаем размер текста в списке */
-    color: #ecf0f1;
+    font-size: clamp(0.9em, 2.5vw, 1em);
+    color: var(--text-color);
     display: inline-block;
     text-align: left;
 }
@@ -106,7 +114,7 @@ header p {
     top: 0;
     width: 25px;
     height: 25px;
-    background: linear-gradient(135deg, #3498db, #2980b9);
+    background: var(--accent-gradient);
     color: #fff;
     border-radius: 50%;
     display: flex;
@@ -119,13 +127,13 @@ header p {
 
 /* Предупреждение */
 .warning {
-    background: linear-gradient(135deg, #ff4d4d, #e74c3c);
+    background: var(--warning-gradient);
     color: #fff;
     padding: 20px;
     border-radius: 8px;
     margin-bottom: 30px;
     border-left: 5px solid #c0392b;
-    font-size: 1em;
+    font-size: clamp(0.9em, 2.5vw, 1em);
     font-weight: bold;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
     text-align: center;
@@ -138,35 +146,35 @@ header p {
 /* Кнопка */
 .btn {
     display: inline-block;
-    background: linear-gradient(135deg, #3498db, #2980b9);
+    background: var(--accent-gradient);
     color: #fff;
     padding: 15px 30px;
     text-decoration: none;
     border-radius: 50px;
-    font-size: 1.1em;
+    font-size: clamp(0.9em, 3vw, 1.1em);
     font-weight: bold;
     transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 6px var(--shadow);
     margin-top: 30px;
 }
 
 .btn:hover {
-    background: linear-gradient(135deg, #2980b9, #3498db);
+    background: var(--accent-gradient);
     transform: translateY(-2px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 10px var(--shadow);
 }
 
 /* Футер */
 footer {
     text-align: center;
     padding: 20px;
-    background: linear-gradient(135deg, #2c3e50, #34495e);
-    color: #ecf0f1;
+    background: var(--secondary-gradient);
+    color: var(--text-color);
     margin-top: 40px;
-    font-size: 0.9em;
-    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.2);
+    font-size: clamp(0.8em, 2.5vw, 0.9em);
+    box-shadow: 0 -4px 6px var(--shadow);
     width: 100%;
-    max-width: 400px; /* Уменьшаем ширину футера */
+    max-width: 400px;
 }
 
 footer a {
@@ -184,11 +192,11 @@ footer a:hover {
 /* Адаптивность */
 @media (max-width: 768px) {
     header h1 {
-        font-size: 1.8em;
+        font-size: clamp(1.3em, 4vw, 1.8em);
     }
 
     header p {
-        font-size: 0.9em;
+        font-size: clamp(0.8em, 3vw, 0.9em);
     }
 
     .container {
@@ -196,11 +204,11 @@ footer a:hover {
     }
 
     .container h2 {
-        font-size: 1.3em;
+        font-size: clamp(1em, 3vw, 1.3em);
     }
 
     .btn {
         padding: 10px 20px;
-        font-size: 0.9em;
+        font-size: clamp(0.8em, 3vw, 0.9em);
     }
 }
