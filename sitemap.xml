@@ -15,4 +15,20 @@
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
+
+    <!-- Логгер -->
+    <url>
+        <loc>https://coyotewatch.github.io/logger/</loc>
+        <lastmod>2023-10-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
+    <!-- Информационная страница -->
+    <url>
+        <loc>https://coyotewatch.github.io/info/</loc>
+        <lastmod>2023-10-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
 </urlset>
