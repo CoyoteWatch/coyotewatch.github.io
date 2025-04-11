@@ -1,26 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
     <!-- Главная страница -->
     <url>
         <loc>https://coyotewatch.github.io/</loc>
         <lastmod>2025-10-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://coyotewatch.github.io/"/>
     </url>
 
-    <!-- Канал Telegram (ссылка на внешний ресурс) -->
+    <!-- IP Logger  -->
     <url>
-        <loc>https://t.me/CoyoteWatch</loc>
+        <loc>https://coyotewatch.github.io/iplogger/</loc>
         <lastmod>2025-10-01</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://coyotewatch.github.io/iplogger/"/>
     </url>
 
     <!-- Логгер -->
     <url>
         <loc>https://coyotewatch.github.io/logger/</loc>
         <lastmod>2025-10-01</lastmod>
-        <changefreq>weekly</changefreq>
+        <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
 
@@ -28,7 +31,15 @@
     <url>
         <loc>https://coyotewatch.github.io/info/</loc>
         <lastmod>2025-10-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+
+    <!-- Канал Telegram (внешняя ссылка) -->
+    <url>
+        <loc>https://t.me/CoyoteWatch</loc>
+        <lastmod>2025-10-01</lastmod>
         <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
+        <priority>0.5</priority>
     </url>
 </urlset>
