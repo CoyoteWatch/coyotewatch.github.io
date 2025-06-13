@@ -44,6 +44,14 @@
         <xhtml:link rel="alternate" hreflang="ru" href="https://coyotewatch.github.io/coyotewatch/"/>
     </url>
 
+    <!-- Telegraph -->
+    <url>
+        <loc>https://coyotewatch.github.io/telegraph/</loc>
+        <lastmod>2025-10-01</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+
     <!-- Канал Telegram (внешняя ссылка) -->
     <url>
         <loc>https://t.me/CoyoteWatch</loc>
