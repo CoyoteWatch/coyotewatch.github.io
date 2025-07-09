@@ -19,6 +19,15 @@
         <xhtml:link rel="alternate" hreflang="ru" href="https://coyotewatch.github.io/iplogger/"/>
     </url>
 
+    <!-- Что такое IP Logger -->
+    <url>
+        <loc>https://coyotewatch.github.io/iplogger/chto-takoe-iplogger</loc>
+        <lastmod>2025-10-01</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="ru" href="https://coyotewatch.github.io/iplogger/chto-takoe-iplogger"/>
+    </url>
+
     <!-- Логгер -->
     <url>
         <loc>https://coyotewatch.github.io/logger/</loc>
