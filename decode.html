@@ -7,18 +7,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"></script>
   <style>
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      font-family: sans-serif;
       max-width: 700px;
       margin: 30px auto;
       padding: 20px;
       background: #f9f9f9;
-      color: #333;
     }
-    h2 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    input, textarea {
+    input, textarea, button {
       width: 100%;
       padding: 12px;
       margin: 8px 0;
@@ -28,62 +23,30 @@
       box-sizing: border-box;
     }
     button {
-      background: #28a745;
+      background: #007bff;
       color: white;
       border: none;
-      padding: 12px;
-      border-radius: 6px;
       cursor: pointer;
-      font-size: 16px;
-      width: 100%;
-      margin-top: 10px;
     }
-    button:hover {
-      background: #218838;
-    }
-    button:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
-    #output {
-      background: #fff;
-      min-height: 80px;
-      white-space: pre-wrap;
-    }
-    #goBtn {
-      display: none;
-      background: #007bff;
-      margin-top: 10px;
-    }
-    #goBtn:hover {
-      background: #0069d9;
-    }
-    #linkDisplay {
-      margin-top: 10px;
-      display: none;
-    }
-    #linkDisplay a {
-      color: #007bff;
-      word-break: break-all;
-      text-decoration: underline;
-    }
+    button:hover { background: #0069d9; }
+    #linkDisplay, #goBtn { display: none; margin-top: 10px; }
+    #decodedLink { color: #007bff; text-decoration: underline; word-break: break-all; }
   </style>
 </head>
 <body>
 
   <h2>Расшифровка happ:// ссылок</h2>
-  <input type="text" id="data" placeholder="Вставьте ссылку: happ://crypt/..." />
+  <input type="text" id="data" placeholder="happ://crypt/..." />
   <button id="decryptBtn">Расшифровать</button>
-
-  <textarea id="output" readonly placeholder="Результат появится здесь..."></textarea>
+  <textarea id="output" readonly placeholder="Результат..."></textarea>
 
   <div id="linkDisplay">
-    Расшифрованная ссылка: <a id="decodedLink" target="_blank" rel="noopener">...</a>
+    Ссылка: <a id="decodedLink" target="_blank" rel="noopener"></a>
   </div>
-  <button id="goBtn">Перейти по ссылке</button>
+  <button id="goBtn">Перейти</button>
 
   <script>
-  const key1 = `-----BEGIN RSA PRIVATE KEY-----
+    const key1 = `-----BEGIN RSA PRIVATE KEY-----
 MIICXwIBAAKBgQCxsS7PUq1biQlVD92rf6eXKr9oG1/SrYx3qWahZP+Jq35m4Wb/
 Z+mB6eBWrPzJ/zZpZLWLQorcvOKt+sLaCHyH1HLNkti4jlaEQX6x97XgBm8GK08+
 lLLWquFDhWRNxsrfzJyNdpVopzBRmCJKTc8ObYyPbrv9T35a8Kd5WqjnUwIDAQAB
@@ -101,7 +64,7 @@ pcM+KDGLnbBhWrvZGy8Zg8vQwNvdvCLvylk0jVTTFqW3ibM=
 
     const key2 = `-----BEGIN RSA PRIVATE KEY-----
 MIIJKQIBAAKCAgEA5cL2yu9dZGnNbs4jt222NugIqiuZdXKdTh4IgXZmOX0vdpW+
-rYWrPd1EObQ3Urt+YBTK5Di98EBjYCPr8tusaVRAn3Vaq41CDisEdX35u1N8jSHQ
+rYWrPd1EObQ3Urt+YBTK5Di98EBjYCPr8tusaVRAn3Vaq41CDisEdX35u1N‌N8jSHQ
 0zDOtPdrvJtlqShib4UI6Vybk/QSmoZVbpRb67TNsiFqBmK1kxT+mbtHkhdT2u+h
 zNLQr0FtJR1+gC+ELKZ48zZY/d3YSSRSb+dxUnd4FH31Kz68VKqlajISSzIrGQWc
 /zqSlihIvfnTPNX3pCyJpwAuYXieWSRDAogrwGwoiN++y14OLYHrNlqzoJ44WM3T
@@ -119,7 +82,7 @@ k5iaUdLBBzQv+wfyIG/nQ/aYREbP51gXHjncpX21xIXQ+CS0uDA09FetxZ6bRKgG
 ExX8YQ7gk6rJUfjj8zQUR/3zR2pkKHRywANzu32VnSvFFtEL7+EuM0XA03MZStGu
 Rb3/QjO+I2JOV+Ec+VVc9OYangwu8+mQC1NnCWe49LZX04hc/xlRqW4kaWcpbT7x
 GTIeSrWhR7cBjUvgc7NNDnKla8mXSW5/6iSi2Vl83CBm78+ao+Pwbtk/D6n3fM4c
-3FNiBDyWHJ27C8HLicDhSiQqZUuO203zBZrstUNN7tkmMvaHlavrvL0ajBIJD27V
+3FNiBDyWHJ27C‌8HLicDhSiQqZUuO203zBZrstUNN7tkmMvaHlavrvL0ajBIJD27V
 o/uZ61OVYEPDybNJlRFsaRNirIYCHk2DBte6nqbZ7Hvm+3iIk928vz1dyQdZ4bLP
 O5onxTFAcfny8pruXnnS/aTXvaHlzTc84z5mBPR94VRqOEKrAQKCAQEA9VUEaz2X
 WdQuafQo6CIx2YGcBKcmQfpbBtfHb+V4BBko9BzU3ao6AGSXS54LMktnAmKjqbXk
@@ -131,7 +94,7 @@ acZVs28lcuEIYQKCAQEA78CegneDbIdPyTW2+YDVVYUMQcIkxF82CnEql1GS2nIe
 whlKOYsAXrWln4NLdHltKX6POhfmWO5WA5ERD7v0NmNw9Q/+3je6BXx1RasExXYO
 qwcz7UAni95p6ZZBTP/j0fFZQYLzUC7Yg5eBDP8rKFR0MV5FnWW7fYxC5+bJY5dZ
 H8A7Jqkt9lrNo4gmfAgbHhFoOFY6X3E7r3UTpx0XtQNQeCZ8sDF9RULSHep6EA0K
-g8JtUdjbpBiTvrC/frCiXwJU+QufqPnN2sDH2UL5Dt+ZKMmp9l6wMdJiK2wMlmru
+g8JtUdjbpBiTvrC/frCiXwJU+QufqP‌nN2sDH2UL5Dt+ZKMmp9l6wMdJiK2wMlmru
 AEuW9I4zDtb36txm6ZrZfQxN6HQyRXRe53bJzjAFVwKCAQEA3+1g4i3Otwxn7QgS
 Sofjrl+SM+EJl5FXgrBz9puh50O70M18MnPNC0zFmBzCpX6ToGa+cgp3eqMpXXBW
 AZnGuNj//LiZFK4MDO/D7j5KEh65xQY4bS+eDmAmode6lhVFVQpji9o25KOinfKA
@@ -159,32 +122,32 @@ P/e/jqdXLPP0SFBjWTMt/joUDgE7v/IGGB0LQ7mGPAlgmxwUHVqP4bJnZ//5sNLx
 WMjtYHOYjaV+lixNSfhFM3MdBndjpkmgSfmgD5uYQYDL29TDk6Eu+xetUEqry8yS
 PjUbNWdDXCglQWMxDGjaqYXMWgxBA1UKjUBWwbgr5yKTJ7mTqhlYEC9D5V/LOnKd
 6pTSvaMxkHXwk8hBWvUNWAxzAf5JZ7EVE3jt0j682+/hnmL/hymUE44yMG1gCcWv
-SpB3BTlKoMnl4yrTakmdkbASeFRkN3iMRewaIenvMhzJh1fq7xwX94otdd5eLB2v
+SpB‌3BTlKoMnl4yrTakmdkbASeFRkN3iMRewaIenvMhzJh1fq7xwX94otdd5eLB2v
 RFavrnhOcN2JJAkKTnx9dwQwFpGEkg+8U613+Tfm/f82l56fFeoFN98dD2mUFLFZ
 oeJ5CG81ZeXrH83niI0joX7rtoAZIPWzq3Y1Zb/Zq+kK2hSIhphY172Uvs8X2Qp2
 ac9UoTPM71tURsA9IvPNvUwSIo/aKlX5KE3IVE0tje7twWXL5Gb1sfcXRzsCAwEA
-AQKCAgAK3VHMFCHlQaiqvHNPNMWRGp0JJl27Ulw3U1Q9p+LC3OWNknyvpxC5EJPQ
-bTUXhlO2A9AiDOXmaj5EMavTAaj0tzWhLlrVVQ/CSJYS4sVyAY67GyTpOIxmYtPB
+AQKCAgAK3VHMFCHlQaiqvHNPNMWRGp0JJl27Ulw3U1Q9p+LC3OWNknyvpxC‌5EJPQ
+bTUXhl‌O2A9AiDOXmaj5EMavTAaj0tzWhLlrVVQ/CSJYS4sVyAY67GyTpOIxmYtPB
 E3YY6vTU1SSoU2dqnMDnfwAbM2g0QXatXYRDGPYLLNHHp7R27IBpBTJeDwb2qEA1
 BBC/3WXsfVy6cfhWrrB7fH4F9tuEtG+sp+N2fbDcFnDH1hbQAm+HEXKzWMpRcSmX
 +rQ2wDlLW/N3utI+TzP4Vx5zTuT3QCsDYzeRgSJ4CjMwKKSGZ3QDF5cDCVJdsJ24
-fRl+mpBWoLqqBS7gzFVYsTx88GNs5jl9D7ZndIEOKYhtA00NgF+0N1Vs7IbgfoBf
+fRl+mpB‌WoLqqBS7gzFVYsTx88GNs5jl9D7ZndIEOKYhtA00NgF+0N1Vs7IbgfoBf
 wABSFoiukBcre2NvJ4jVxApy09IiN6E/HBZ/qhH3q+1k9nLFgzH9VsBXuucgjlSF
 XzVLLQilfsd7LEaX8ytGDAiAC3RLbIhDRX3ruv0ufRSwhUoGd4ps+cgHrKGUGqz4
 pdjOzWFNTzpTTYuxkoMbklI+HIFQcstNLW0mryBcWhldqLhYNGH5w4fX+J/wkxbH
 1Yh9slPWT+WX69/l9myysscXxSlev9Ycty4rNWt9kohNHvBd5ZxlePD5ngTmCZ2P
 jisUS1Kvmy9rjzRjP2qNoxmXmTbp3QJymuF1RjtRHxlqHGVlgQKCAQEA0S/SnC+B
-UlUxxCVQ+qNE8FAe5EWdNgSlz1ep5NGcOBUgpFStHJBGdzSc1Ht6MuBd+2Gqfzi4
+UlUxxCVQ+qNE8FAe5EWdNgSlz1ep5NGcOBUgpF‌StHJBGdzSc1Ht6MuBd+2Gqfzi4
 6CR5BbyaC9i3P0X4347wKjrzPQ39l1kGideRKEKMAbmj2SdaU7kYWFhddurGssp4
 xzojNG0BYkR/0kEnHeCu/RJ6HVwv5K5vyhYsAwKeWeTS3T06KElgy4uNNRRAqI9Z
 JamrU7ZfIQ7YBHsCWlgFwx7Hu7rQS8dOPmd4TW0Xs32yEDfDymw98e4kxNME01Z9
-Q55uShLwXo4g+wp/6SYL363OyR/MqSAW66IthPqz6WnJ37hmk2SZsUip9tBHPdJy
+Q55uShLwXo4‌g+wp/6SYL363OyR/MqSAW66IthPqz6WnJ37hmk2SZsUip9tBHPdJy
 vACHeNR9SP4VMwKCAQEAtTvMeW0QvNWK7+VM2cnm2viFPpqGWDaccI6Zct/Qb6cO
 05xdRtarm/QjM3vXjjN4ALj4gPkz014oPEcHJe5Y6ma1tGmy01cltvYoUsfxYHX2
 jUiaI9EmmOIR/9gSiAZn+P9RjNx9Q/hHT9ul+H5FnitC9wV0TZ7egu3ROKuZ7t5E
-hdogO5lC8qUn6GrVIdj9eDAGkHWdO6v3cqYuP6cV6yiBOK2CikW+MnLC8yXGwvWX
+hdogO5lC‌8qUn6GrVIdj9eDAGkHWdO6v3cqYuP6cV6yiBOK2CikW+MnLC8yXGwvWX
 7iW4/2f0xBP+NWgXPzZu627FC8EDmZv8TEGppd5RsJNcQOraXnq7foEzHCB2MsvJ
-rDbHAmTqKaWKzoxR+dzJOSt1sHbhNXoKKnsEqd112QKCAQAcq2c8DK62sAJwFYUx
+rDbHAmTqKaWKzoxR+dzJOSt1sHb‌hNXoKKnsEqd112QKCAQAcq2c8DK62sAJwFYUx
 tKrAHNr/AiN3wc9PyX35ZFj6vrqIiypmncdqkwVjgcDPtDxtNYd+hDGjb0w+4whh
 00PaIibnzNlRkF7B4Wb+FS92ONsmH2i828p++ovAqb+SbBnzMF4nJuTCuU8V4lKs
 OyMhl9hame6htKST3Yya1OVxVvSVPQii3V+g/sE3wEbJ3shtm+b4sxzOsqBOitIi
@@ -197,47 +160,58 @@ zt+rBn5DXtrMMmTt3Q5UdfvPI18u/XEE902Y0hGvG/Qa57tYt/+7azmZ/C6uVW6g
 hWDahbKZ9ZkBTqjC1D+HsGh+KS0s5k7CgYllLMM7yWSOnVn8U7z1j+gsmQUYLNW7
 2IeNN4thaQB7Knj8w3JmArCrwtZkAEkCggEANfI5YqEYgq/Mt4NeTTHG5PoRuy1c
 RzJLB8QCRF5O2GLij/jl61zSdbeczsNqJzufnxKx49Okkesy9xKVAcT2QMJ55V38
-wekpJk0p3wdEhgdBLhOO6kY6R9dhy74e8LFDERH/MfRuvOhBcLqjGb6xGnedf3yy
-IFm5Mt4aWOVxLyqUQGF76Dj+PQXjwmQBjxsgxrBAf2UVm/4eb8a‌aX/2xlWDjJ8eXX
+wekpJk0p3wdE‌hgdBLhOO6kY6R9dhy74e8LFDERH/MfRuvOhBcLqjGb6xGnedf3yy
+IFm5Mt4aWOVxLyqUQGF76Dj+PQXjwmQBjxsgxrBAf2UVm/4eb8aX/2xlWDjJ8eXX
 R+4PaoA7jR4tsfW7z0iYqA+GUQ0zTcINJdoSTbypxkT8iVQI3VAWcKILnNcoZS4Q
 1n9PKHp8L9qHLGlIgt2jOpwKaYDChgoJI5+9WJFarSi7yX1pBXgMfD7aHA==
 -----END RSA PRIVATE KEY-----`;
+
+    function cleanKey(key) {
+      return key.replace(/[^\x20-\x7E\n\r\-]/g, '');
+    }
 
     const decryptBtn = document.getElementById('decryptBtn');
     const goBtn = document.getElementById('goBtn');
     const linkDisplay = document.getElementById('linkDisplay');
     const decodedLink = document.getElementById('decodedLink');
-    let currentDecryptedUrl = '';
+    let currentUrl = '';
 
     decryptBtn.addEventListener('click', () => {
-      const link = document.getElementById('data').value.trim();
+      const input = document.getElementById('data').value.trim();
       const output = document.getElementById('output');
-      const prefixMap = {
-        'happ://crypt/': key1,
-        'happ://crypt2/': key2,
-        'happ://crypt3/': key3
+
+      const prefixes = {
+        'happ://crypt/': cleanKey(key1),
+        'happ://crypt2/': cleanKey(key2),
+        'happ://crypt3/': cleanKey(key3)
       };
 
-      const matchedPrefix = Object.keys(prefixMap).find(prefix => link.startsWith(prefix));
+      let prefix = null;
+      let privKey = null;
+      for (const p of Object.keys(prefixes)) {
+        if (input.startsWith(p)) {
+          prefix = p;
+          privKey = prefixes[p];
+          break;
+        }
+      }
 
-      if (!matchedPrefix) {
-        alert("Неверный формат ссылки. Используйте happ://crypt/..., happ://crypt2/... или happ://crypt3/...");
-        output.value = "";
+      if (!prefix) {
+        output.value = "❌ Неизвестный формат ссылки";
         linkDisplay.style.display = 'none';
         goBtn.style.display = 'none';
         return;
       }
 
+      const encryptedData = input.slice(prefix.length);
       const crypt = new JSEncrypt();
-      crypt.setPrivateKey(prefixMap[matchedPrefix]);
-      const data = link.slice(matchedPrefix.length);
-      const decrypted = crypt.decrypt(data);
+      crypt.setPrivateKey(privKey);
+      const decrypted = crypt.decrypt(encryptedData);
 
-      if (decrypted === false || decrypted === null) {
-        output.value = "Ошибка расшифровки. Убедитесь, что данные зашифрованы корректно.";
+      if (!decrypted) {
+        output.value = "❌ Ошибка расшифровки. Проверьте данные и ключ.";
         linkDisplay.style.display = 'none';
         goBtn.style.display = 'none';
-        currentDecryptedUrl = '';
         return;
       }
 
@@ -245,24 +219,23 @@ R+4PaoA7jR4tsfW7z0iYqA+GUQ0zTcINJdoSTbypxkT8iVQI3VAWcKILnNcoZS4Q
 
       try {
         const url = new URL(decrypted);
-        currentDecryptedUrl = url.toString();
-        decodedLink.href = currentDecryptedUrl;
-        decodedLink.textContent = currentDecryptedUrl;
+        currentUrl = url.toString();
+        decodedLink.href = currentUrl;
+        decodedLink.textContent = currentUrl;
         linkDisplay.style.display = 'block';
         goBtn.style.display = 'block';
       } catch (e) {
         linkDisplay.style.display = 'none';
         goBtn.style.display = 'none';
-        currentDecryptedUrl = '';
       }
     });
 
     goBtn.addEventListener('click', () => {
-      if (currentDecryptedUrl) {
-        window.location.href = currentDecryptedUrl;
+      if (currentUrl) {
+        window.location.href = currentUrl;
       }
     });
   </script>
-  <h2>от создателей CoyoteWatch!</h2>
+  <h2>От создателей CoyoteWatch!</h2>
 </body>
 </html>
