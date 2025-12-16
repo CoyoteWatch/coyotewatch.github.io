@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Расшифровщик happ подписок</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js  "></script>
   <style>
     body {
       font-family: sans-serif;
@@ -236,6 +236,32 @@ R+4PaoA7jR4tsfW7z0iYqA+GUQ0zTcINJdoSTbypxkT8iVQI3VAWcKILnNcoZS4Q
       }
     });
   </script>
+
+  <!-- Base64 Decoder Block -->
+  <h2>Декодер Base64</h2>
+  <input type="text" id="base64Input" placeholder="Введите строку в Base64..." />
+  <button id="decodeBase64Btn">Декодировать</button>
+  <textarea id="base64Output" readonly placeholder="Результат декодирования..."></textarea>
+
+  <script>
+    document.getElementById('decodeBase64Btn').addEventListener('click', () => {
+      const input = document.getElementById('base64Input').value.trim();
+      const output = document.getElementById('base64Output');
+
+      if (!input) {
+        output.value = "❌ Пустая строка";
+        return;
+      }
+
+      try {
+        const decoded = atob(input);
+        output.value = decoded;
+      } catch (e) {
+        output.value = "❌ Ошибка декодирования Base64: " + e.message;
+      }
+    });
+  </script>
+
   <h2>От создателей CoyoteWatch!</h2>
 </body>
 </html>
