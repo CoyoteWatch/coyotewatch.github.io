@@ -7,53 +7,83 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"></script>
   <style>
     body {
-      font-family: sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       max-width: 700px;
-      margin: 40px auto;
+      margin: 30px auto;
       padding: 20px;
       background: #f9f9f9;
+      color: #333;
     }
     h2 {
       text-align: center;
-      color: #333;
+      margin-bottom: 20px;
     }
-    textarea, input {
+    input, textarea {
       width: 100%;
-      padding: 10px;
-      margin: 10px 0;
+      padding: 12px;
+      margin: 8px 0;
       border: 1px solid #ccc;
       border-radius: 6px;
-      font-size: 14px;
+      font-size: 15px;
       box-sizing: border-box;
     }
     button {
-      background: #007bff;
+      background: #28a745;
       color: white;
       border: none;
-      padding: 12px 20px;
+      padding: 12px;
       border-radius: 6px;
       cursor: pointer;
       font-size: 16px;
       width: 100%;
+      margin-top: 10px;
     }
     button:hover {
-      background: #0069d9;
+      background: #218838;
+    }
+    button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
     }
     #output {
       background: #fff;
-      min-height: 100px;
+      min-height: 80px;
+      white-space: pre-wrap;
+    }
+    #goBtn {
+      display: none;
+      background: #007bff;
+      margin-top: 10px;
+    }
+    #goBtn:hover {
+      background: #0069d9;
+    }
+    #linkDisplay {
+      margin-top: 10px;
+      display: none;
+    }
+    #linkDisplay a {
+      color: #007bff;
+      word-break: break-all;
+      text-decoration: underline;
     }
   </style>
 </head>
 <body>
 
-  <h2>Расшифровка ссылки</h2>
-  <input type="text" id="data" placeholder="Вставьте ссылку вида happ://crypt/..." />
+  <h2>Расшифровка happ:// ссылок</h2>
+  <input type="text" id="data" placeholder="Вставьте ссылку: happ://crypt/..." />
   <button id="decryptBtn">Расшифровать</button>
+
   <textarea id="output" readonly placeholder="Результат появится здесь..."></textarea>
 
+  <div id="linkDisplay">
+    Расшифрованная ссылка: <a id="decodedLink" target="_blank" rel="noopener">...</a>
+  </div>
+  <button id="goBtn">Перейти по ссылке</button>
+
   <script>
-    const key1 = `-----BEGIN RSA PRIVATE EMPTY KEY-----
+    const key1 = `-----BEGIN RSA PRIVATE KEY-----
 MIICXwIBAAKBgQCxsS7PUq1biQlVD92rf6eXKr9oG1/SrYx3qWahZP+Jq35m4Wb/
 Z+mB6eBWrPzJ/zZpZLWLQorcvOKt+sLaCHyH1HLNkti4jlaEQX6x97XgBm8GK08+
 lLLWquFDhWRNxsrfzJyNdpVopzBRmCJKTc8ObYyPbrv9T35a8Kd5WqjnUwIDAQAB
@@ -168,23 +198,33 @@ hWDahbKZ9ZkBTqjC1D+HsGh+KS0s5k7CgYllLMM7yWSOnVn8U7z1j+gsmQUYLNW7
 2IeNN4thaQB7Knj8w3JmArCrwtZkAEkCggEANfI5YqEYgq/Mt4NeTTHG5PoRuy1c
 RzJLB8QCRF5O2GLij/jl61zSdbeczsNqJzufnxKx49Okkesy9xKVAcT2QMJ55V38
 wekpJk0p3wdEhgdBLhOO6kY6R9dhy74e8LFDERH/MfRuvOhBcLqjGb6xGnedf3yy
-IFm5Mt4aWOVxLyqUQGF76Dj+PQXjwmQBjxsgxrBAf2UVm/4eb8aX/2xlWDjJ8eXX
+IFm5Mt4aWOVxLyqUQGF76Dj+PQXjwmQBjxsgxrBAf2UVm/4eb8a‌aX/2xlWDjJ8eXX
 R+4PaoA7jR4tsfW7z0iYqA+GUQ0zTcINJdoSTbypxkT8iVQI3VAWcKILnNcoZS4Q
 1n9PKHp8L9qHLGlIgt2jOpwKaYDChgoJI5+9WJFarSi7yX1pBXgMfD7aHA==
 -----END RSA PRIVATE KEY-----`;
 
-    document.getElementById('decryptBtn').addEventListener('click', () => {
+    const decryptBtn = document.getElementById('decryptBtn');
+    const goBtn = document.getElementById('goBtn');
+    const linkDisplay = document.getElementById('linkDisplay');
+    const decodedLink = document.getElementById('decodedLink');
+    let currentDecryptedUrl = '';
+
+    decryptBtn.addEventListener('click', () => {
       const link = document.getElementById('data').value.trim();
+      const output = document.getElementById('output');
       const prefixMap = {
         'happ://crypt/': key1,
         'happ://crypt2/': key2,
         'happ://crypt3/': key3
       };
 
-      let matchedPrefix = Object.keys(prefixMap).find(prefix => link.startsWith(prefix));
+      const matchedPrefix = Object.keys(prefixMap).find(prefix => link.startsWith(prefix));
 
       if (!matchedPrefix) {
         alert("Неверный формат ссылки. Используйте happ://crypt/..., happ://crypt2/... или happ://crypt3/...");
+        output.value = "";
+        linkDisplay.style.display = 'none';
+        goBtn.style.display = 'none';
         return;
       }
 
@@ -193,14 +233,36 @@ R+4PaoA7jR4tsfW7z0iYqA+GUQ0zTcINJdoSTbypxkT8iVQI3VAWcKILnNcoZS4Q
       const data = link.slice(matchedPrefix.length);
       const decrypted = crypt.decrypt(data);
 
-      const output = document.getElementById('output');
       if (decrypted === false || decrypted === null) {
         output.value = "Ошибка расшифровки. Убедитесь, что данные зашифрованы корректно.";
-      } else {
-        output.value = decrypted;
+        linkDisplay.style.display = 'none';
+        goBtn.style.display = 'none';
+        currentDecryptedUrl = '';
+        return;
+      }
+
+      output.value = decrypted;
+
+      try {
+        const url = new URL(decrypted);
+        currentDecryptedUrl = url.toString();
+        decodedLink.href = currentDecryptedUrl;
+        decodedLink.textContent = currentDecryptedUrl;
+        linkDisplay.style.display = 'block';
+        goBtn.style.display = 'block';
+      } catch (e) {
+        linkDisplay.style.display = 'none';
+        goBtn.style.display = 'none';
+        currentDecryptedUrl = '';
+      }
+    });
+
+    goBtn.addEventListener('click', () => {
+      if (currentDecryptedUrl) {
+        window.location.href = currentDecryptedUrl;
       }
     });
   </script>
-  <h2>От создателей CoyoteWatch!</h2>
+  <h2>от создателей CoyoteWatch!</h2>
 </body>
 </html>
