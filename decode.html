@@ -228,13 +228,8 @@ function cleanKey(key) {
   return key.replace(/[^\x20-\x7E\n\r\-]/g, '');
 }
 
-function normalizeBase64(str) {
-  str = str.replace(/-/g, '+').replace(/_/g, '/');
-  while (str.length % 4 !== 0) str += '=';
-  return str;
-}
-
 function decryptForge(privateKeyPem, encryptedBase64) {
+  encryptedBase64 = encryptedBase64.replace(/[^A-Za-z0-9+/=]/g, '');
   const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
   const encryptedBytes = forge.util.decode64(encryptedBase64);
   return privateKey.decrypt(encryptedBytes, 'RSAES-PKCS1-V1_5');
@@ -282,7 +277,7 @@ decryptBtn.addEventListener('click', () => {
     if (prefix === 'happ://crypt4/') {
       decrypted = decryptForge(privKey, encryptedData);
     } else {
-      encryptedData = normalizeBase64(encryptedData);
+      encryptedData = encryptedData.replace(/[^A-Za-z0-9+/=]/g, '');
       const crypt = new JSEncrypt();
       crypt.setPrivateKey(privKey);
       decrypted = crypt.decrypt(encryptedData);
