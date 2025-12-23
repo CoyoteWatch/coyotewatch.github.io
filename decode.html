@@ -235,11 +235,21 @@ function normalizeBase64(str) {
 }
 
 function decryptForge(privateKeyPem, encryptedBase64) {
-  encryptedBase64 = normalizeBase64(encryptedBase64);
+  encryptedBase64 = encryptedBase64
+    .replace(/-/g, '+')
+    .replace(/_/g, '/');
+
+  while (encryptedBase64.length % 4 !== 0) {
+    encryptedBase64 += '=';
+  }
+
   const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
   const encryptedBytes = forge.util.decode64(encryptedBase64);
-  return privateKey.decrypt(encryptedBytes, 'RSAES-PKCS1-V1_5');
+  return privateKey.decrypt(encryptedBytes, 'RSA-OAEP', {
+    md: forge.md.sha1.create()
+  });
 }
+
 
 const decryptBtn = document.getElementById('decryptBtn');
 const goBtn = document.getElementById('goBtn');
