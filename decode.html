@@ -235,21 +235,10 @@ function normalizeBase64(str) {
 }
 
 function decryptForge(privateKeyPem, encryptedBase64) {
-  encryptedBase64 = encryptedBase64
-    .replace(/-/g, '+')
-    .replace(/_/g, '/');
-
-  while (encryptedBase64.length % 4 !== 0) {
-    encryptedBase64 += '=';
-  }
-
   const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
   const encryptedBytes = forge.util.decode64(encryptedBase64);
-  return privateKey.decrypt(encryptedBytes, 'RSA-OAEP', {
-    md: forge.md.sha1.create()
-  });
+  return privateKey.decrypt(encryptedBytes, 'RSAES-PKCS1-V1_5');
 }
-
 
 const decryptBtn = document.getElementById('decryptBtn');
 const goBtn = document.getElementById('goBtn');
@@ -265,7 +254,7 @@ decryptBtn.addEventListener('click', () => {
     'happ://crypt/': cleanKey(key1),
     'happ://crypt2/': cleanKey(key2),
     'happ://crypt3/': cleanKey(key3),
-    'happ://crypt4/': cleanKey(key4)
+    'happ://crypt4/': key4
   };
 
   let prefix = null;
@@ -298,7 +287,7 @@ decryptBtn.addEventListener('click', () => {
       crypt.setPrivateKey(privKey);
       decrypted = crypt.decrypt(encryptedData);
     }
-  } catch (e) {
+  } catch {
     decrypted = null;
   }
 
@@ -326,23 +315,6 @@ decryptBtn.addEventListener('click', () => {
 
 goBtn.addEventListener('click', () => {
   if (currentUrl) window.location.href = currentUrl;
-});
-</script>
-
-<h2>Декодер Base64</h2>
-<input type="text" id="base64Input" placeholder="Введите строку в Base64..." />
-<button id="decodeBase64Btn">Декодировать</button>
-<textarea id="base64Output" readonly placeholder="Результат декодирования..."></textarea>
-
-<script>
-document.getElementById('decodeBase64Btn').addEventListener('click', () => {
-  const input = document.getElementById('base64Input').value.trim();
-  const output = document.getElementById('base64Output');
-  try {
-    output.value = atob(input);
-  } catch (e) {
-    output.value = '❌ Ошибка декодирования Base64';
-  }
 });
 </script>
 
