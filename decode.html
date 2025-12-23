@@ -52,6 +52,16 @@
 <button id="goBtn">Перейти</button>
 
 <script>
+  function cleanKey(key) {
+  return key.replace(/[^\x20-\x7E\n\r\-]/g, '');
+}
+
+function decryptForge(privateKeyPem, encryptedBase64) {
+  encryptedBase64 = encryptedBase64.replace(/[^A-Za-z0-9+/=]/g, '');
+  const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
+  const encryptedBytes = forge.util.decode64(encryptedBase64);
+  return privateKey.decrypt(encryptedBytes, 'RSAES-PKCS1-V1_5');
+}
 const key1 = `-----BEGIN RSA PRIVATE KEY-----
 MIICXwIBAAKBgQCxsS7PUq1biQlVD92rf6eXKr9oG1/SrYx3qWahZP+Jq35m4Wb/
 Z+mB6eBWrPzJ/zZpZLWLQorcvOKt+sLaCHyH1HLNkti4jlaEQX6x97XgBm8GK08+
@@ -224,26 +234,15 @@ jWyMYnMwh4TbOOhjnL8iLs1D5GeSy2RV30uNR6D9XbSE/MsVqb71C2mvRhePuZRL
 k64Lx4+d28LcIk3akHMl9HeBPIvEsn94aC2K+oxaCl2Dv/tAsj62kypSAAAA
 -----END RSA PRIVATE KEY-----`;
 
-function cleanKey(key) {
-  return key.replace(/[^\x20-\x7E\n\r\-]/g, '');
-}
-
-function decryptForge(privateKeyPem, encryptedBase64) {
-  encryptedBase64 = encryptedBase64.replace(/[^A-Za-z0-9+/=]/g, '');
-  const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
-  const encryptedBytes = forge.util.decode64(encryptedBase64);
-  return privateKey.decrypt(encryptedBytes, 'RSAES-PKCS1-V1_5');
-}
-
 const decryptBtn = document.getElementById('decryptBtn');
 const goBtn = document.getElementById('goBtn');
 const linkDisplay = document.getElementById('linkDisplay');
 const decodedLink = document.getElementById('decodedLink');
+const output = document.getElementById('output');
 let currentUrl = '';
 
 decryptBtn.addEventListener('click', () => {
   const input = document.getElementById('data').value.trim();
-  const output = document.getElementById('output');
 
   const prefixes = {
     'happ://crypt/': cleanKey(key1),
@@ -264,7 +263,7 @@ decryptBtn.addEventListener('click', () => {
   }
 
   if (!prefix) {
-    output.value = '❌ Неизвестный формат ссылки';
+    output.value = 'Ошибка формата ссылки';
     linkDisplay.style.display = 'none';
     goBtn.style.display = 'none';
     return;
@@ -287,7 +286,7 @@ decryptBtn.addEventListener('click', () => {
   }
 
   if (!decrypted) {
-    output.value = '❌ Ошибка расшифровки. Проверьте данные и ключ.';
+    output.value = 'Ошибка расшифровки';
     linkDisplay.style.display = 'none';
     goBtn.style.display = 'none';
     return;
