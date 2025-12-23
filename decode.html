@@ -4,7 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Расшифровщик happ подписок</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js  "></script>
+
+  <!-- JSEncrypt -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jsencrypt/3.3.2/jsencrypt.min.js"></script>
+
+  <!-- Forge (для crypt4) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/forge/1.3.1/forge.min.js"></script>
+
   <style>
     body {
       font-family: sans-serif;
@@ -35,18 +41,18 @@
 </head>
 <body>
 
-  <h2>Расшифровка happ:// ссылок</h2>
-  <input type="text" id="data" placeholder="happ://crypt/..." />
-  <button id="decryptBtn">Расшифровать</button>
-  <textarea id="output" readonly placeholder="Результат..."></textarea>
+<h2>Расшифровка happ:// ссылок</h2>
+<input type="text" id="data" placeholder="happ://crypt/..." />
+<button id="decryptBtn">Расшифровать</button>
+<textarea id="output" readonly placeholder="Результат..."></textarea>
 
-  <div id="linkDisplay">
-    Ссылка: <a id="decodedLink" target="_blank" rel="noopener"></a>
-  </div>
-  <button id="goBtn">Перейти</button>
+<div id="linkDisplay">
+  Ссылка: <a id="decodedLink" target="_blank" rel="noopener"></a>
+</div>
+<button id="goBtn">Перейти</button>
 
-  <script>
-    const key1 = `-----BEGIN RSA PRIVATE KEY-----
+<script>
+const key1 = `-----BEGIN RSA PRIVATE KEY-----
 MIICXwIBAAKBgQCxsS7PUq1biQlVD92rf6eXKr9oG1/SrYx3qWahZP+Jq35m4Wb/
 Z+mB6eBWrPzJ/zZpZLWLQorcvOKt+sLaCHyH1HLNkti4jlaEQX6x97XgBm8GK08+
 lLLWquFDhWRNxsrfzJyNdpVopzBRmCJKTc8ObYyPbrv9T35a8Kd5WqjnUwIDAQAB
@@ -62,7 +68,7 @@ uUILWML0uL+uAw01TeerH1aVU52T+h5z6BPdOTMNHD0arWywCzhi13i03JvaAyYw
 pcM+KDGLnbBhWrvZGy8Zg8vQwNvdvCLvylk0jVTTFqW3ibM=
 -----END RSA PRIVATE KEY-----`;
 
-    const key2 = `-----BEGIN RSA PRIVATE KEY-----
+const key2 = `-----BEGIN RSA PRIVATE KEY-----
 MIIJKQIBAAKCAgEA5cL2yu9dZGnNbs4jt222NugIqiuZdXKdTh4IgXZmOX0vdpW+
 rYWrPd1EObQ3Urt+YBTK5Di98EBjYCPr8tusaVRAn3Vaq41CDisEdX35u1N‌N8jSHQ
 0zDOtPdrvJtlqShib4UI6Vybk/QSmoZVbpRb67TNsiFqBmK1kxT+mbtHkhdT2u+h
@@ -114,7 +120,7 @@ AMqvetiZ+xIsnUvDTChu7sFuL/rzndptvJ2NHHp8TbCwJAODOitU3Dd7HJfM2ERn
 mH0DZwzuaFdWnKPyJWBXddFYaNQxlfzr6IuPy6b213MHGKnFf8l2C5u32Bo+
 -----END RSA PRIVATE KEY-----`;
 
-    const key3 = `-----BEGIN RSA PRIVATE KEY-----
+const key3 = `-----BEGIN RSA PRIVATE KEY-----
 MIIJJwIBAAKCAgEAlBetA0wjbaj+h7oJ/d/hpNrXvAcuhOdFGEFcfCxSWyLzWk4S
 AQ05gtaEGZyetTax2uqagi9HT6lapUSUe2S8nMLJf5K+LEs9TYrhhBdx/B0BGahA
 +lPJa7nUwp7WfUmSF4hir+xka5ApHjzkAQn6cdG6FKtSPgq1rYRPd1jRf2maEHwi
@@ -165,8 +171,8 @@ IFm5Mt4aWOVxLyqUQGF76Dj+PQXjwmQBjxsgxrBAf2UVm/4eb8aX/2xlWDjJ8eXX
 R+4PaoA7jR4tsfW7z0iYqA+GUQ0zTcINJdoSTbypxkT8iVQI3VAWcKILnNcoZS4Q
 1n9PKHp8L9qHLGlIgt2jOpwKaYDChgoJI5+9WJFarSi7yX1pBXgMfD7aHA==
 -----END RSA PRIVATE KEY-----`;
-    
-    const key4 = `-----BEGIN RSA PRIVATE KEY-----
+
+const key4 = `-----BEGIN RSA PRIVATE KEY-----
 MIIJKQIBAAKCAgEA3UZ0M3L4K+WjM3vkbQnzozHg/cRbEXvQ6i4A8RVN4OM3rK9k
 U01FdjyoIgywve8OEKsFnVwERZAQZ1Trv60BhmaM76QQEE+EUlIOL9EpwKWGtTL5
 lYC1sT9XJMNP3/CI0gP5wwQI88cY/xedpOEBW72EmOOShHUm/b/3m+HPmqwc4ugK
@@ -218,104 +224,120 @@ jWyMYnMwh4TbOOhjnL8iLs1D5GeSy2RV30uNR6D9XbSE/MsVqb71C2mvRhePuZRL
 k64Lx4+d28LcIk3akHMl9HeBPIvEsn94aC2K+oxaCl2Dv/tAsj62kypSAAAA
 -----END RSA PRIVATE KEY-----`;
 
-    function cleanKey(key) {
-      return key.replace(/[^\x20-\x7E\n\r\-]/g, '');
+function cleanKey(key) {
+  return key.replace(/[^\x20-\x7E\n\r\-]/g, '');
+}
+
+function normalizeBase64(str) {
+  str = str.replace(/-/g, '+').replace(/_/g, '/');
+  while (str.length % 4 !== 0) str += '=';
+  return str;
+}
+
+function decryptForge(privateKeyPem, encryptedBase64) {
+  encryptedBase64 = normalizeBase64(encryptedBase64);
+  const privateKey = forge.pki.privateKeyFromPem(privateKeyPem);
+  const encryptedBytes = forge.util.decode64(encryptedBase64);
+  return privateKey.decrypt(encryptedBytes, 'RSAES-PKCS1-V1_5');
+}
+
+const decryptBtn = document.getElementById('decryptBtn');
+const goBtn = document.getElementById('goBtn');
+const linkDisplay = document.getElementById('linkDisplay');
+const decodedLink = document.getElementById('decodedLink');
+let currentUrl = '';
+
+decryptBtn.addEventListener('click', () => {
+  const input = document.getElementById('data').value.trim();
+  const output = document.getElementById('output');
+
+  const prefixes = {
+    'happ://crypt/': cleanKey(key1),
+    'happ://crypt2/': cleanKey(key2),
+    'happ://crypt3/': cleanKey(key3),
+    'happ://crypt4/': cleanKey(key4)
+  };
+
+  let prefix = null;
+  let privKey = null;
+
+  for (const p in prefixes) {
+    if (input.startsWith(p)) {
+      prefix = p;
+      privKey = prefixes[p];
+      break;
     }
+  }
 
-    const decryptBtn = document.getElementById('decryptBtn');
-    const goBtn = document.getElementById('goBtn');
-    const linkDisplay = document.getElementById('linkDisplay');
-    const decodedLink = document.getElementById('decodedLink');
-    let currentUrl = '';
+  if (!prefix) {
+    output.value = '❌ Неизвестный формат ссылки';
+    linkDisplay.style.display = 'none';
+    goBtn.style.display = 'none';
+    return;
+  }
 
-    decryptBtn.addEventListener('click', () => {
-      const input = document.getElementById('data').value.trim();
-      const output = document.getElementById('output');
+  let encryptedData = input.slice(prefix.length);
+  let decrypted = null;
 
-      const prefixes = {
-        'happ://crypt/': cleanKey(key1),
-        'happ://crypt2/': cleanKey(key2),
-        'happ://crypt3/': cleanKey(key3),
-        'happ://crypt4/': cleanKey(key4)
-      };
-
-      let prefix = null;
-      let privKey = null;
-      for (const p of Object.keys(prefixes)) {
-        if (input.startsWith(p)) {
-          prefix = p;
-          privKey = prefixes[p];
-          break;
-        }
-      }
-
-      if (!prefix) {
-        output.value = "❌ Неизвестный формат ссылки";
-        linkDisplay.style.display = 'none';
-        goBtn.style.display = 'none';
-        return;
-      }
-
-      const encryptedData = input.slice(prefix.length);
+  try {
+    if (prefix === 'happ://crypt4/') {
+      decrypted = decryptForge(privKey, encryptedData);
+    } else {
+      encryptedData = normalizeBase64(encryptedData);
       const crypt = new JSEncrypt();
       crypt.setPrivateKey(privKey);
-      const decrypted = crypt.decrypt(encryptedData);
+      decrypted = crypt.decrypt(encryptedData);
+    }
+  } catch (e) {
+    decrypted = null;
+  }
 
-      if (!decrypted) {
-        output.value = "❌ Ошибка расшифровки. Проверьте данные и ключ.";
-        linkDisplay.style.display = 'none';
-        goBtn.style.display = 'none';
-        return;
-      }
+  if (!decrypted) {
+    output.value = '❌ Ошибка расшифровки. Проверьте данные и ключ.';
+    linkDisplay.style.display = 'none';
+    goBtn.style.display = 'none';
+    return;
+  }
 
-      output.value = decrypted;
+  output.value = decrypted;
 
-      try {
-        const url = new URL(decrypted);
-        currentUrl = url.toString();
-        decodedLink.href = currentUrl;
-        decodedLink.textContent = currentUrl;
-        linkDisplay.style.display = 'block';
-        goBtn.style.display = 'block';
-      } catch (e) {
-        linkDisplay.style.display = 'none';
-        goBtn.style.display = 'none';
-      }
-    });
+  try {
+    const url = new URL(decrypted);
+    currentUrl = url.toString();
+    decodedLink.href = currentUrl;
+    decodedLink.textContent = currentUrl;
+    linkDisplay.style.display = 'block';
+    goBtn.style.display = 'block';
+  } catch {
+    linkDisplay.style.display = 'none';
+    goBtn.style.display = 'none';
+  }
+});
 
-    goBtn.addEventListener('click', () => {
-      if (currentUrl) {
-        window.location.href = currentUrl;
-      }
-    });
-  </script>
+goBtn.addEventListener('click', () => {
+  if (currentUrl) window.location.href = currentUrl;
+});
+</script>
 
-  <!-- Base64 Decoder Block -->
-  <h2>Декодер Base64</h2>
-  <input type="text" id="base64Input" placeholder="Введите строку в Base64..." />
-  <button id="decodeBase64Btn">Декодировать</button>
-  <textarea id="base64Output" readonly placeholder="Результат декодирования..."></textarea>
+<h2>Декодер Base64</h2>
+<input type="text" id="base64Input" placeholder="Введите строку в Base64..." />
+<button id="decodeBase64Btn">Декодировать</button>
+<textarea id="base64Output" readonly placeholder="Результат декодирования..."></textarea>
 
-  <script>
-    document.getElementById('decodeBase64Btn').addEventListener('click', () => {
-      const input = document.getElementById('base64Input').value.trim();
-      const output = document.getElementById('base64Output');
+<script>
+document.getElementById('decodeBase64Btn').addEventListener('click', () => {
+  const input = document.getElementById('base64Input').value.trim();
+  const output = document.getElementById('base64Output');
+  try {
+    output.value = atob(input);
+  } catch (e) {
+    output.value = '❌ Ошибка декодирования Base64';
+  }
+});
+</script>
 
-      if (!input) {
-        output.value = "❌ Пустая строка";
-        return;
-      }
+<h2>От создателей CoyoteWatch!</h2>
+<p>@coyotewatch</p>
 
-      try {
-        const decoded = atob(input);
-        output.value = decoded;
-      } catch (e) {
-        output.value = "❌ Ошибка декодирования Base64: " + e.message;
-      }
-    });
-  </script>
-
-  <h2>От создателей CoyoteWatch!</h2>
-  <p>@coyotewatch</p>
 </body>
 </html>
