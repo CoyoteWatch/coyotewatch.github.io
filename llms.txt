@@ -1,0 +1,80 @@
+# CoyoteWatch (OSINT Telegram System)
+
+> **CoyoteWatch** is a free OSINT platform and builder for creating Telegram bots ("logger bots") that use Telegram Web Apps to collect user-provided information, perform user verification, and assist with community moderation.
+>
+> **Important:** This project is **not affiliated with** or related to wildlife or environmental organizations such as Coyote Watch Canada, Urban Coyote Research, or similar initiatives.
+
+## Overview
+
+CoyoteWatch enables users to build Telegram bots that integrate with Telegram Web Apps for identity verification, community management, and OSINT workflows. The platform is designed for administrators, researchers, and security professionals who need customizable verification and information-gathering tools within Telegram.
+
+## Key Features
+
+### Logger Bot Builder
+- Create Telegram bots for private chats, groups, and channels.
+- Configure verification workflows using Telegram Web Apps.
+- Customize bot behavior without developing a bot from scratch.
+
+### User Verification
+- Verify new members joining groups or channels.
+- Time-limited verification challenges.
+- Track users joining through invitation links.
+- Verify users through private conversations.
+
+### Inline Mode
+- Retrieve basic information about an IP address or phone number directly from any Telegram chat using the inline bot.
+
+### Bot Management
+- Edit bot metadata, including:
+  - Display name
+  - Description
+  - Bio
+  - Command list
+- Manage bots using their Bot API token.
+
+### Tracking & Redirects
+- Generate tracking links.
+- Embed trackers into Telegraph pages and shared documents.
+- Support redirect-based workflows for Web Apps.
+
+### AI Assistant
+- Built-in AI assistant for generating bot descriptions, messages, and configuration suggestions.
+
+## Data Available Through Telegram Web Apps
+
+When a user interacts with a Telegram Web App and grants the appropriate permissions, the platform can access information provided by Telegram or the user's browser, including:
+
+- Telegram User ID
+- Username
+- First and last name
+- Phone number (when explicitly shared)
+- IP address
+- Approximate geolocation derived from IP or browser permissions
+- User-Agent
+- Device type
+- Screen resolution
+- Language preferences
+- Time zone
+- Basic IP and phone number intelligence
+
+The exact information available depends on the permissions granted by the user, Telegram's Web App APIs, and browser capabilities.
+
+## Technical Details
+
+- Built on the Telegram Bot API and Telegram Web Apps.
+- Supports external redirect services for Web App deployment and tracking workflows.
+- Designed as a free, customizable OSINT and moderation platform.
+
+## Intended Use
+
+CoyoteWatch is intended for:
+
+- OSINT investigations
+- Security awareness and auditing
+- Community moderation
+- User verification
+- Research and educational purposes
+
+## Disclaimer
+
+CoyoteWatch is intended for legitimate OSINT, security, and moderation use cases. Users are responsible for complying with all applicable laws, privacy regulations, and Telegram's Terms of Service. Collecting personal information without authorization or using the platform for harassment, unauthorized surveillance, or doxxing may violate applicable laws and platform policies.
